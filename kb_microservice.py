@@ -2,6 +2,7 @@ import flask
 import logging
 import json
 import yaml
+import threading
 from flask import request
 import openai
 from time import time, sleep
@@ -48,7 +49,8 @@ def open_file(filepath):
 
 
 
-def chatbot(messages, model="gpt-4-0613", temperature=0):
+#def chatbot(messages, model="gpt-4-0613", temperature=0):
+def chatbot(messages, model="gpt-3.5-turbo-0613", temperature=0):
     openai.api_key = open_file('key_openai.txt')
     max_retry = 7
     retry = 0
@@ -72,7 +74,7 @@ def chatbot(messages, model="gpt-4-0613", temperature=0):
 
 
 
-###     KB directory functions
+###     KB functions
 
 
 
@@ -96,6 +98,18 @@ def search_kb(query):
 
 
 
+def create_article(payload):
+    # TODO: Implement the logic to create a new KB article based on the payload
+    pass
+
+
+
+def update_article(payload):
+    # TODO: Implement the logic to update a KB article based on the payload
+    pass
+
+
+
 ###     flask routes
 
 
@@ -116,23 +130,17 @@ def search_endpoint():
 
 @app.route('/create', methods=['post'])
 def create_endpoint():
-    update_directory()
-    payload = request.json  # payload should just be string
-    print(payload)
-    # TODO create a new KB article based upon the submitted string with title, description, and body
-    
-    return flask.Response(json.dumps(result), mimetype='application/json')
+    payload = request.json
+    threading.Thread(target=create_article, args=(payload,)).start()
+    return flask.Response(json.dumps({"status": "success"}), mimetype='application/json')
 
 
 
 @app.route('/update', methods=['post'])
-def update_endpoing():
-    update_directory()
-    payload = request.json  # payload should be a dict with title and content
-    print(payload)
-    # TODO update specified 
-    
-    return flask.Response(json.dumps(result), mimetype='application/json')
+def update_endpoint():
+    payload = request.json
+    threading.Thread(target=update_article, args=(payload,)).start()
+    return flask.Response(json.dumps({"status": "success"}), mimetype='application/json')
 
 
 
