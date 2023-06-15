@@ -46,9 +46,13 @@ back to the knowledge base directory.
 To run the KB Microservice, simply execute the `chat.py` script. The service will start a Flask server listening on port
 999. You can then interact with the service by making HTTP requests to the exposed endpoints.
 
+___
+
 # API Documentation
 
 ## Endpoints
+
+___
 
 ### POST /create
 
@@ -73,6 +77,8 @@ This endpoint is used to create a new KB article.
   "status": "success"
 }
 ```
+
+___
 
 ### POST /search
 
@@ -108,6 +114,8 @@ This endpoint is used to search for KB articles.
   }
 ]
 ```
+
+___
 
 ### POST /update
 
