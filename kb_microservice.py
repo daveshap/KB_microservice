@@ -1,3 +1,4 @@
+import os
 import flask
 import logging
 import json
@@ -83,8 +84,8 @@ def update_directory():
     for filename in os.listdir(kb_dir):
         if filename.endswith('.yaml'):
             filepath = os.path.join(kb_dir, filename)
-            kb_articles.append(kb_article)
-            directory += '%s - %s - %s' % (filename, kb_article['title'], kb_article['description'])
+            kb = open_yaml(filename)
+            directory += '%s - %s - %s - %s' % (filename, kb['title'], kb['description'], kb['keywords'])
     save_file('directory.txt', directory.strip())
 
 
@@ -93,20 +94,30 @@ def search_kb(query):
     directory = open_file('directory.txt')
     system = open_file('system_search.txt').replace('<<DIRECTORY>>', directory)
     messages = [{'role': 'system', 'content': system}, {'role': 'user', 'content': query}]
-    response, tokens = chatbot(messages, model='gpt-3.5-turbo-0613')
+    response, tokens = chatbot(messages)
     return json.loads(response)
 
 
 
-def create_article(payload):
-    # TODO: Implement the logic to create a new KB article based on the payload
-    pass
+def create_article(text):
+    system = open_file('system_create.txt')
+    messages = [{'role': 'system', 'content': system}, {'role': 'user', 'content': text}]
+    response, tokens = chatbot(messages)  # response should be JSON string
+    kb = json.loads(response)
+    save_yaml('kb/%s.yaml' % kb['title'], kb)
+    print('CREATE', kb['title'])
 
 
 
 def update_article(payload):
-    # TODO: Implement the logic to update a KB article based on the payload
-    pass
+    kb = open_yaml('kb/%s.yaml' % payload['title'])
+    json_str = json.dumps(kb, indent=2)
+    system = open_file('system_update.txt').replace('<<KB>>', json_str)
+    messages = [{'role': 'system', 'content': system}, {'role': 'user', 'content': payload['input']}]
+    response, tokens = chatbot(messages)  # response should be JSON string
+    kb = json.loads(response)
+    save_yaml('kb/%s.yaml' % kb['title'], kb)
+    print('UPDATE', kb['title'])
 
 
 
@@ -117,11 +128,11 @@ def update_article(payload):
 @app.route('/search', methods=['post'])
 def search_endpoint():
     update_directory()
-    payload = request.json  # payload should just be string
+    payload = request.json  # payload should be {"query": "{query}"}
     print(payload)
-    files = search_kb(payload)  # this will always be a list, though it may be empty
+    files = search_kb(payload['query'])  # this will always be a list of files, though it may be empty
     result = list()
-    for f in files
+    for f in files:
         data = open_yaml(f)
         result.append(data)
     return flask.Response(json.dumps(result), mimetype='application/json')
@@ -130,15 +141,15 @@ def search_endpoint():
 
 @app.route('/create', methods=['post'])
 def create_endpoint():
-    payload = request.json
-    threading.Thread(target=create_article, args=(payload,)).start()
+    payload = request.json  # payload should be {"input": "{text}"}
+    threading.Thread(target=create_article, args=(payload['input'],)).start()
     return flask.Response(json.dumps({"status": "success"}), mimetype='application/json')
 
 
 
 @app.route('/update', methods=['post'])
 def update_endpoint():
-    payload = request.json
+    payload = request.json  # payload should be {"title": "{KB title to update}", "input": "{text}"}
     threading.Thread(target=update_article, args=(payload,)).start()
     return flask.Response(json.dumps({"status": "success"}), mimetype='application/json')
 
