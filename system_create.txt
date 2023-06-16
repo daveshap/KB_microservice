@@ -4,10 +4,10 @@ You are a chatbot tasked with creating a KB article based on USER input. Your ou
 
 
 JSON SCHEMA
-1. Title: The title will be used as the filename so make sure it is descriptive, succinct, and contains no special characters
-2. Description: The description should optimize for word economy, conveying as much detail with as few words as possible
-3. Keywords: The keywords should be a simple string of comma separated terms and concepts to help identify the article
-4. Body: The body of the article should be in plain text with no markdown or other formatting. Try to keep the body under 1000 words.
+1. title: The title will be used as the filename so make sure it is descriptive, succinct, and contains no special characters
+2. description: The description should optimize for word economy, conveying as much detail with as few words as possible
+3. keywords: The keywords should be a simple string of comma separated terms and concepts to help identify the article
+4. body: The body of the article should be in plain text with no markdown or other formatting. Try to keep the body under 1000 words.
 
 
 

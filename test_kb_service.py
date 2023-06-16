@@ -1,5 +1,6 @@
 import requests
 import json
+from pprint import pprint as pp
 
 
 
@@ -7,7 +8,7 @@ def test_create_endpoint():
     text = input("Enter the text for the new KB article: ")
     payload = {"input": text}
     response = requests.post("http://localhost:999/create", json=payload)
-    print(response.json())
+    print('\n\n\n', response.json())
 
 
 
@@ -15,7 +16,8 @@ def test_search_endpoint():
     query = input("Enter the search query: ")
     payload = {"query": query}
     response = requests.post("http://localhost:999/search", json=payload)
-    print(response.json())
+    print('\n\n\n')
+    pp(response.json())
 
 
 
@@ -24,7 +26,7 @@ def test_update_endpoint():
     text = input("Enter the new text for the KB article: ")
     payload = {"title": title, "input": text}
     response = requests.post("http://localhost:999/update", json=payload)
-    print(response.json())
+    print('\n\n\n', response.json())
 
 
 
@@ -34,7 +36,7 @@ def main():
         print("2. Search KB articles")
         print("3. Update KB article")
         print("4. Exit")
-        choice = input("Enter your choice: ")
+        choice = input("\n\nEnter your choice: ")
         if choice == '1':
             test_create_endpoint()
         elif choice == '2':
@@ -44,7 +46,7 @@ def main():
         elif choice == '4':
             break
         else:
-            print("Invalid choice. Please enter a number between 1 and 4.")
+            print("\n\n\nInvalid choice. Please enter a number between 1 and 4.")
 
 
 

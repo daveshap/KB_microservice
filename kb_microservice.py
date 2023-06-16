@@ -13,7 +13,6 @@ from time import time, sleep
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 app = flask.Flask('KB Articles')
-kb_dir = 'kb/'
 
 
 
@@ -80,12 +79,13 @@ def chatbot(messages, model="gpt-3.5-turbo-0613", temperature=0):
 
 
 def update_directory():
+    kb_dir = 'kb/'
     directory = ''
     for filename in os.listdir(kb_dir):
         if filename.endswith('.yaml'):
             filepath = os.path.join(kb_dir, filename)
-            kb = open_yaml(filename)
-            directory += '%s - %s - %s - %s' % (filename, kb['title'], kb['description'], kb['keywords'])
+            kb = open_yaml(filepath)
+            directory += '\n%s - %s - %s - %s\n' % (filename, kb['title'], kb['description'], kb['keywords'])
     save_file('directory.txt', directory.strip())
 
 
@@ -133,7 +133,7 @@ def search_endpoint():
     files = search_kb(payload['query'])  # this will always be a list of files, though it may be empty
     result = list()
     for f in files:
-        data = open_yaml(f)
+        data = open_yaml(f'kb/{f}')
         result.append(data)
     return flask.Response(json.dumps(result), mimetype='application/json')
 

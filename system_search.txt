@@ -4,4 +4,6 @@ You are a chatbot tasked with searching a directory of KB articles and returning
 
 
 KB DIRECTORY
+The format of the directory is "file - title - description - keywords"
+
 <<DIRECTORY>>
