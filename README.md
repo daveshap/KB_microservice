@@ -11,7 +11,18 @@ OpenAI's GPT model to process and generate the content of the articles.
 | `/search` | POST | Searches for KB articles | `query`: The search query | `{ "query": "search query" }` |
 | `/update` | POST | Updates an existing KB article | `title`: The title of the KB article to update<br>`input`: The new text for the KB article | `{ "title": "Article 1", "input": "This is the updated text for the KB article." }` |
 
-## How It Works
+## Setup
+
+1. Create `key_openai.txt` and place your API key within.
+2. Create `kb/` directory for your KB articles.
+3. Install all requirements in `requirements.txt`.
+
+## Usage
+
+1. Run `kb_microservice.py` - this is a Flask app that runs on 999 by default.
+2. Test it using `test_kb_service.py` to create, search, and update KB articles.
+
+# How It Works
 
 The KB Microservice uses Flask, a lightweight web framework for Python, to expose endpoints for creating, searching, and
 updating KB articles. The service uses YAML files to store the articles, and a directory text file to keep track of all
@@ -20,14 +31,14 @@ the articles in the knowledge base.
 The service uses OpenAI's GPT model to process user inputs and generate the content of the articles. The GPT model
 is a powerful language model that can generate human-like text based on the input it receives.
 
-### Creating KB Articles
+## Creating KB Articles
 
 To create a KB article, a POST request is made to the `/create` endpoint with a JSON payload containing the text for the
 article. The service then uses the GPT model to process the text and generate a JSON object containing the title,
 description, keywords, and body of the article. The article is then saved as a YAML file in the knowledge base
 directory.
 
-### Searching KB Articles
+## Searching KB Articles
 
 To search for KB articles, a POST request is made to the `/search` endpoint with a JSON payload containing the search
 query. The service first updates the directory of articles, then uses the GPT model to process the query and return a
@@ -41,13 +52,7 @@ article to update and the new text for the article. The service first opens the 
 model to process the new text and generate an updated JSON object for the article. The updated article is then saved
 back to the knowledge base directory.
 
-### Running the Service
-
-To run the KB Microservice, simply execute the `chat.py` script. The service will start a Flask server listening on port
-999. You can then interact with the service by making HTTP requests to the exposed endpoints.
-
-
-## Future Work
+# Future Work
 
 1. Daily Journal (episodic memory)
    - Prioritize based on relevance, or temporal proximity
