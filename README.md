@@ -45,7 +45,7 @@ query. The service first updates the directory of articles, then uses the GPT mo
 list of relevant article filenames. The service then opens each file, converts the YAML content to JSON, and returns the
 list of articles as a JSON response.
 
-### Updating KB Articles
+## Updating KB Articles
 
 To update a KB article, a POST request is made to the `/update` endpoint with a JSON payload containing the title of the
 article to update and the new text for the article. The service first opens the existing article, then uses the GPT
