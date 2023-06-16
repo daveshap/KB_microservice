@@ -1,3 +1,5 @@
 Axiomatic Alignment.yaml - Axiomatic Alignment - The concept of finding universal axioms that apply to all humans and species - axiomatic alignment, universal axioms, first principles, suffering, prosperity, understanding
 
 Heuristic Imperatives for AGI Systems.yaml - Heuristic Imperatives for AGI Systems - Understanding the concept of heuristic imperatives in AGI systems - heuristic imperatives, AGI systems, rules of thumb, motivations, drives, heuristics, learning, experience
+
+Instrumental Convergence in AGI.yaml - Instrumental Convergence in AGI - Exploring the concept of instrumental convergence in Artificial General Intelligence (AGI) - instrumental convergence, AGI, utilitarian goal, instrumental goal, resource acquisition

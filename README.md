@@ -45,3 +45,12 @@ back to the knowledge base directory.
 
 To run the KB Microservice, simply execute the `chat.py` script. The service will start a Flask server listening on port
 999. You can then interact with the service by making HTTP requests to the exposed endpoints.
+
+
+## Future Work
+
+1. Daily Journal (episodic memory)
+   - Prioritize based on relevance, or temporal proximity
+2. Tasks (like internal Jira or Trello)
+   - Prioritize based on ROI or heuristic imperatives (e.g. which tasks will reduce suffering the most, increase prosperity the most, and increase understanding the most)
+3. Dossiers (basically KB article on users)
